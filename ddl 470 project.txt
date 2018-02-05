@@ -1,0 +1,250 @@
+Create Table EMPLOYEE ( 
+EmployeeID   int           NOT NULL,
+LName        varchar(15)   NOT NULL,
+FName        varchar(15)   NOT NULL,
+Birthday     date,
+ShelterID    int           NOT NULL,
+DeptID       int           NOT NULL,    
+PhoneNumber  varchar(10),
+Sex          varchar(1),
+Address      varchar(64),
+PRIMARY KEY (EmployeeID)
+);
+
+Create Table CUSTOMER(
+CustomerID   int           NOT NULL,
+AnimalID     int           NOT NULL,
+LName        varchar(15)   NOT NULL,
+FName        varchar(15)   NOT NULL,  
+PhoneNumber  varchar(10),
+PRIMARY KEY (CustomerID,AnimalID)
+);
+
+Create Table DEPARTMENT( 
+DeptID       int           NOT NULL,
+ShelterID    int           NOT NULL,  
+DeptName     varchar(15)   NOT NULL,
+ManagerID    int   NOT NULL,     
+PRIMARY KEY (DeptID,ShelterID)
+);
+
+Create Table ANIMAL( 
+AnimalID     int           NOT NULL,
+AnimalName   varchar(15)   NOT NULL,
+Gender       varchar(1)    NOT NULL,
+ShelterID    int           NOT NULL,
+DeptID       int           NOT NULL,
+MedicalID    int,
+IsAdopted    bool          NOT NULL,
+DateRecieved date          NOT NULL,
+DateAdopted  date,
+DietID       int           NOT NULL,
+Picture	     varchar(60)  NOT NULL,
+PRIMARY KEY (AnimalID)
+);
+
+Create Table MEDICAL( 
+MedicalID   int           NOT NULL,
+MedProblem   varchar(64)   NOT NULL,
+NeedsSurgery bool,
+TreatLocID   int,
+PRIMARY KEY (MedicalID)
+);
+
+Create Table SHELTER( 
+ShelterID    int           NOT NULL,
+Name         varchar(10)   NOT NULL,
+City         varchar(20)   NOT NULL,
+State        varchar(2)    NOT NULL,
+ManagerID    int   NOT NULL,
+PRIMARY KEY (ShelterID)
+);
+
+Create Table TREATMENT( 
+TreatLocID   int           NOT NULL,
+Name         varchar(10)   NOT NULL,
+City         varchar(20)   NOT NULL,
+State        varchar(2)    NOT NULL,
+ManagerID    int   NOT NULL,
+PRIMARY KEY (TreatLocID)
+);
+
+Create Table SUPPLY( 
+SupplyID     int           NOT NULL,
+Name         varchar(10)   NOT NULL,
+City         varchar(20)   NOT NULL,
+State        varchar(2)    NOT NULL,
+ManagerID    int   NOT NULL,
+PRIMARY KEY (SupplyID)
+);
+
+Create Table VOLUNTEER( 
+VolunteerID  int           NOT NULL,
+Name         varchar(10)   NOT NULL,
+City         varchar(20)   NOT NULL,
+State        varchar(2)    NOT NULL,
+ManagerID    int   NOT NULL,
+PRIMARY KEY (VolunteerID)
+);
+
+Create Table PAY( 
+EmployeeID   int           NOT NULL,
+HourWorked   int           NOT NULL,
+    check(HoursWorked >0 and HoursWorked <=40), 
+HourlyRate   int           NOT NULL,
+Pay          int           AS (HourWorked*HourlyRate),
+DeptID       int           NOT NULL,
+PRIMARY KEY (EmployeeID)
+);
+
+Create Table ALLERGIES(
+AllergyID    int           NOT NULL,
+AllergyName  varchar(20)   NOT NULL,
+
+PRIMARY KEY (AllergyID)
+);
+
+Create Table DIET(
+DietID    int           NOT NULL,
+DietName  varchar(60)   NOT NULL,
+
+PRIMARY KEY (DietID)
+);
+
+
+INSERT INTO EMPLOYEE
+VALUES (0,'Bossman','Hoss','1990-11-07',0,0,'8161234567','M','1134 Lane Ave'),
+(1,'Hope','Bob','1980-06-09',0,1,'8163456789','M','999 Upside Down Dr'),
+(2,'Cheeks','Rosie','1969-01-29',0,1,'8162345678','F','789 Post Dr'),
+(3,'Courtney','Gabby','1996-11-07',0,2,'8165556678','F','1111 WayNorth Dr.'),
+(4,'Smith','Casey','1989-08-02',0,3,'8166898547','M','968 NotGhetto Dr.'),
+(5,'Pembrook','Dylan','1992-11-16',1,0,'8165471234','M','1143 DownSouth Ln.'),
+(6,'Gipson','Matthew','1994-06-30',1,2,'3145567896','M','564 St Louis Dr.'),
+(7,'Stark','Tony','1972-04-20',1,3,'5558522545','M','10880 Malibu Point, Malibu, CA'),
+(8,'Cheeks','Sandy','1980-05-03',1,1,'9135487854','F','8531 Binkini Bottom Dr.');
+
+INSERT INTO DEPARTMENT
+VALUES (0,0,'Owner',0),
+(1,0,'Front Desk',2),
+(2,0,'Dog',3),
+(3,0,'Cat',4),
+(0,1,'Owner',5),
+(1,1,'Front Desk',8),
+(2,1,'Dog',6),
+(3,1,'Cat',7);
+
+INSERT INTO ANIMAL
+VALUES(0,'Whiskers','F',0,3,4,True,'2016-02-12','2016-04-08',0,'C_0.jpg'),
+(1,'Fluffy','M',1,3,4,True,'2017-09-10','2019-10-12',1,'C_1.jpg'),
+(2,'Mitten','M',0,3,3,False,'2007,01,21',NULL,3,'C_2.jpg'),
+(3,'Blanco','F',1,3,4,False,'2015-06-15',NULL,2,'C_3.jpg'),
+(4,'Runt','M',1,3,2,False,'2017-07-07',NULL,1,'C_4.jpg'),
+(5,'Stripes','F',0,3,2,False,'2011-11-11',Null,0,'C_5.jpg'),
+(6,'Bruce','M',1,3,3,False,'2012-03-03',NULL,1,'C_6.jpg'),
+(7,'Floppy','F',1,2,2,False,'2010-04-20',NULL,0,'D_0.jpg'),
+(8,'Stud','M',0,2,4,True,'2017-10-11','2017-10-12',2,'D_1.jpg'),
+(9,'Max','M',0,2,4,False,'1999-06-06',NULL,3,'D_2.jpg'),
+(10,'Frank','F',1,2,1,False,'2009-05-02',NULL,1,'D_3.jpg'),
+(11,'Luke','M',0,2,4,False,'2015-07-29',NULL,0,'D_4.jpg'),
+(12,'Ren','M',0,2,4,True,'2016-11-20','2017,03,20',0,'D_5.jpg'),
+(13,'Puffy','F',0,2,3,False,'2017-08-29',NULL,3,'D_6.jpg'),
+(14,'Buddy','M',1,2,4,True,'2002-03-20','2002-04-10',2,'D_7.jpg'),
+(15,'Charlie','M',0,2,4,False,'2017-11-20',NULL,1,'D_8.jpg');
+
+INSERT INTO CUSTOMER
+VALUES(0,0,'Stark','Pepper','4025555874'),
+(1,1,'Rodgers','Steve','2052541256'),
+(2,8,'Bossman','Hoss','8161234567'),
+(3,12,'Courtney','Gabby','8165556678'),
+(4,14,'Pembrook','Dylan','8165471234');
+
+INSERT INTO SHELTER
+VALUES (0,'KC Shelter','Kansas City','MO',0),
+(1,'Omaha','Omaha','NE',5);
+
+INSERT INTO SUPPLY
+VALUES (0,'Pedigree','McLean','VA',0),
+(1,'Purina','St. Louis','MO',6),
+(2,'Tidy Cat','St. Louis','MO',4),
+(3,'Greenies','MCLean','VA',5),
+(4,'Hefty','Lincolnshire','IL',2);
+
+INSERT INTO TREATMENT
+VALUES (0,'GenHosp','KC','MO',3),
+(1,'BrshCanine','KC','MO',1),
+(2,'DirtyBit','Omaha','NE',5),
+(3,'Brokenpads','KC','NE',0),
+(4,'GrvyGrmr','Omaha','NE',6),
+(5,'Dark Side','Omaha','NE',8);
+
+INSERT INTO ALLERGIES
+VALUES (0,'Grass'),
+(1,'Peanuts'),
+(2,'Milk'),
+(3,'Pollen');
+
+INSERT INTO DIET
+VALUES (0,'Normal'),
+(1,'Gluten Free'),
+(2,'Grain Free'),
+(3,'Raw Meats');
+
+INSERT INTO PAY (EmployeeID,HourWorked,HourlyRate,DeptID)
+VALUES (0,40,37,0),
+(1,40,20,1),
+(2,25,20,1),
+(3,40,30,2),
+(4,40,30,3),
+(5,40,37,0),
+(6,30,30,2),
+(7,10,30,3),
+(8,40,20,1);
+
+INSERT INTO MEDICAL
+VALUES (0,'Spay&Nutr',True,2),
+(1,'TeethClean',False,1),
+(2,'Grooming',False,4),
+(3,'BrokeLimb',True,3),
+(4,'Nothing',False,NULL);
+
+INSERT INTO VOLUNTEER
+VALUES (0,'Tucker','KC','MO',3),
+(1,'Flamer','Omaha','NE',8),
+(2,'Potato','Omaha','NE',8),
+(3,'Johnson','Omaha','NE',6);
+
+ALTER TABLE EMPLOYEE
+ADD FOREIGN KEY (DeptID) REFERENCES DEPARTMENT(DeptID);
+
+ALTER TABLE CUSTOMER
+ADD FOREIGN KEY (AnimalID) REFERENCES ANIMAL(AnimalID);
+
+ALTER TABLE DEPARTMENT
+ADD FOREIGN KEY (ManagerID) REFERENCES EMPLOYEE(EmployeeID),
+ADD FOREIGN KEY (ShelterID) REFERENCES SHELTER(ShelterID);
+
+ALTER TABLE ANIMAL
+ADD FOREIGN KEY (DeptID) REFERENCES DEPARTMENT(DeptID),
+ADD FOREIGN KEY (MedicalID) REFERENCES MEDICAL(MedicalID),
+ADD FOREIGN KEY (DietID) REFERENCES DIET(DietID),
+ADD FOREIGN KEY (ShelterID) REFERENCES SHELTER(ShelterID),
+ADD FORGIGN KEY (AllergyID) REFERENCES ALLERGY(AllergyID);
+
+ALTER TABLE MEDICAL
+ADD FOREIGN KEY (TreatLocID) REFERENCES TREATMENT(TreatLocID);
+
+ALTER TABLE SHELTER
+ADD FOREIGN KEY (ManagerID) REFERENCES EMPLOYEE(EmployeeID);
+
+ALTER TABLE TREATMENT
+ADD FOREIGN KEY (ManagerID) REFERENCES EMPLOYEE(EmployeeID);
+
+ALTER TABLE SUPPLY
+ADD FOREIGN KEY (ManagerID) REFERENCES EMPLOYEE(EmployeeID);
+
+ALTER TABLE VOLUNTEER
+ADD FOREIGN KEY (ManagerID) REFERENCES EMPLOYEE(EmployeeID);
+
+ALTER TABLE PAY
+ADD FOREIGN KEY (EmployeeID) REFERENCES EMPLOYEE(EmployeeID),
+ADD FOREIGN KEY (DeptID) REFERENCES DEPARTMENT(DeptID);

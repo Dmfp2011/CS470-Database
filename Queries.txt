@@ -1,0 +1,45 @@
+Q1) Employer wants a list of all employees who work front desk 
+(Employee ID, LastName, FirstName)
+
+SELECT EmployeeID,Lname,Fname
+FROM EMPLOYEE
+WHERE DeptID=1;
+
+Q2) Customer wants all animals named  Mitten
+that can be adopted (Animal ID, Department ID,)
+
+SELECT AnimalID,DeptID
+FROM ANIMAL
+WHERE IsAdopted=False AND AnimalName='Mitten';
+
+Q3)  Employer wants to see every employee who 
+makes more than $15 per hour (EmployeeID,Lname,HourlyRate)
+
+SELECT E.EmployeeID,E.Lname,P.HourlyRate
+FROM Employee E
+INNER JOIN PAY P on P.EmployeeID=E.EmployeeID
+WHERE HourlyRate>20;
+
+Q4)  Employer wants to see If any customers are also employees 
+(EmployeeID, Fname, Lname)
+
+SELECT E.EmployeeID,C.Fname,C.Lname
+FROM Customer C
+INNER JOIN Employee E on E.Lname=C.Lname AND E.Fname=C.Fname
+AND E.PhoneNumber=C.PhoneNumber
+
+Q5)  Customer wants a list of all available dogs at KC 
+(name and ID of dog)
+
+SELECT A.AnimalID,A.AnimalName
+FROM Shelter S
+INNER JOIN Animal A on A.ShelterID=S.ShelterID
+WHERE A.DeptID=2 AND A.IsAdopted=False
+
+Q6) Customer wants to see a list of available cats without 
+medical problems at the ‘KC shelter' (AnimalID,AnimalName)
+
+SELECT A.AnimalID,A.AnimalName
+FROM Shelter S
+INNER JOIN Animal A on A.ShelterID=S.ShelterID
+WHERE A.DeptID=3 AND S.Name='KC Shelter' AND A.MedicalID=4;
